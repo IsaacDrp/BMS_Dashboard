@@ -1,6 +1,6 @@
 # ---- STAGE 1: El Constructor (Builder) ----
 # Usamos una imagen de Node para construir el proyecto
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 # Establecemos el directorio de trabajo
 WORKDIR /app
