@@ -1,0 +1,12 @@
+# Archivos de caché y dependencias locales
+/dist
+/node_modules
+
+# Archivos de configuración de Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Git
+.git
+.gitignore

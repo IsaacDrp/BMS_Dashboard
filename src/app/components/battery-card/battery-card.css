@@ -1,0 +1,206 @@
+/* --- Estilo Base de la Tarjeta (Glassmorphism) --- */
+:host {
+  display: block;
+}
+
+.card {
+  /* --- El efecto "Glassmorphism" --- */
+  background: rgba(30, 41, 59, 0.6); /* Fondo (slate-800 con 60% opacidad) */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); /* Para Safari */
+  border: 1px solid rgba(148, 163, 184, 0.2); /* Borde (slate-400 con 20% opacidad) */
+  /* ---------------------------------- */
+  
+  border-radius: 0.75rem; /* 12px */
+  overflow: hidden;
+  transition: all 0.3s ease;
+  color: #e2e8f0; /* slate-200 */
+}
+
+/* Efecto hover para darle vida */
+:host(:hover) .card {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-color: rgba(148, 163, 184, 0.4);
+}
+
+/* --- Estado Desconectado --- */
+.card.disconnected {
+  background: rgba(51, 65, 85, 0.3);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  opacity: 0.6;
+}
+.card.disconnected:hover {
+  transform: none;
+  box-shadow: none;
+}
+.card.disconnected .soc-value {
+  color: #64748b; /* slate-500 */
+}
+
+
+/* --- Encabezado de Tarjeta --- */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05); /* Un leve brillo en el header */
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: white;
+  font-weight: 600;
+}
+
+.mac-address {
+  font-family: 'Fira Code', 'Courier New', Courier, monospace;
+  color: #94a3b8; /* slate-400 */
+  font-size: 0.8rem;
+  margin-left: auto;
+}
+
+/* --- El punto de estado con animación de pulso --- */
+.status-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #22c55e; /* green-500 */
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 1);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+
+/* --- Cuerpo de la Tarjeta --- */
+.card-body {
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+/* --- Estilos del Gráfico de Carga (SOC) --- */
+.soc-display {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.soc-chart {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* El 'background' se aplica dinámicamente con [ngStyle] en el HTML */
+}
+
+.soc-chart .soc-value {
+  /* Círculo interior */
+  width: 60px;
+  height: 60px;
+  background-color: #1e293b; /* slate-800 */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.soc-chart .soc-value span {
+  font-size: 0.8rem;
+  color: #94a3b8; /* slate-400 */
+  margin-left: 2px;
+  margin-top: -8px;
+}
+
+.soc-label {
+  display: flex;
+  flex-direction: column;
+}
+.soc-label span:first-child {
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.soc-label span:last-child {
+  color: #94a3b8; /* slate-400 */
+  font-size: 0.8rem;
+}
+
+/* --- Estilos de los Datos Principales (V, A, W) --- */
+.main-data {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.data-point {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.data-point .label {
+  color: #94a3b8; /* slate-400 */
+  font-size: 0.9rem;
+}
+.data-point .value {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-family: 'Fira Code', 'Courier New', Courier, monospace;
+}
+
+/* --- Footer (Voltajes de Celdas) --- */
+.card-footer {
+  padding: 1.25rem 1.5rem;
+  background: rgba(0, 0, 0, 0.15); /* Fondo un poco más oscuro */
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.card-footer .label {
+  font-size: 0.8rem;
+  color: #94a3b8; /* slate-400 */
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.cell-voltages {
+  display: flex;
+  justify-content: space-around;
+  gap: 0.5rem;
+}
+
+.cell {
+  background-color: #334155; /* slate-700 */
+  color: #e2e8f0; /* slate-200 */
+  padding: 0.5rem;
+  border-radius: 0.375rem; /* 6px */
+  font-family: 'Fira Code', 'Courier New', Courier, monospace;
+  font-size: 0.9rem;
+  flex-grow: 1;
+  text-align: center;
+}
