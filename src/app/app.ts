@@ -1,49 +1,34 @@
-import { Component, OnInit } from '@angular/core'; // <-- Añadir OnInit
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { SolarService } from './services/solar.service';
+
+// Importamos los componentes hijos
 import { BatteryCardComponent } from './components/battery-card/battery-card';
-import { HttpClient } from '@angular/common/http'; // <-- IMPORTAR ESTO
+import { SystemSummaryComponent } from './components/system-summary/system-summary';
+import { LoadingScreen } from './components/loading-screen/loading-screen';
 
 @Component({
   selector: 'app-root',
-  standalone: true, 
+  standalone: true,
   imports: [
-    CommonModule,         
-    RouterModule,         
-    BatteryCardComponent  
+    CommonModule, 
+    BatteryCardComponent, 
+    SystemSummaryComponent, 
+    LoadingScreen
   ],
   templateUrl: './app.html',
-  styleUrls: ['./app.css']
+  styleUrls: ['./app.css'] 
 })
-export class App implements OnInit { // <-- Implementar OnInit
-  title = 'monitor-dashboard';
-  
-  // 1. La URL de tu API
-  private dataUrl = '/api/status';
+export class App {
+  solarService = inject(SolarService);
+  dashboard$ = this.solarService.dashboard$;
 
-  // 2. La variable 'data' ahora empieza vacía (undefined)
-  public data: any;
-
-  // 3. Inyectamos el HttpClient en el constructor
-  constructor(private http: HttpClient) {}
-
-  // 4. Cuando el componente inicia, llamamos al método para traer los datos
-  ngOnInit(): void {
-    this.fetchData();
-  }
-
-  // 5. Este es el método que hace la magia
-  fetchData(): void {
-    this.http.get(this.dataUrl).subscribe(
-      (response) => {    // Si todo sale bien, asignamos la respuesta a nuestra variable
-        this.data = response;
-      },
-      (error) => {
-        // Si falla, lo mostramos en la consola
-        console.error('¡Error al traer los datos!', error);
-        // Opcional: poner data de error para mostrar en la UI
-        this.data = { summary: { system_status: 'Error de Conexión' }, batteries: [] };
-      }
-    );
+  toggleInverter(currentState: boolean) {
+    // La lógica de negocio se mantiene aquí o en el servicio
+    const newState = currentState ? 'off' : 'on';
+    this.solarService.toggleInverter(newState).subscribe({
+      next: () => console.log(`Inversor cambiado a ${newState}`),
+      error: (err) => console.error(err)
+    });
   }
 }

@@ -2,45 +2,52 @@
   
   <div class="card-header">
     <h3>{{ battery.name }}</h3>
-    <div *ngIf="battery.connected" class="status-dot" title="Conectado"></div>
-    <span class="mac-address">{{ battery.mac }}</span>
+    <div *ngIf="battery.connected" 
+         class="status-dot" 
+         [title]="battery.status"
+         [ngClass]="{
+           'charging': battery.status === 'Cargando',
+           'discharging': battery.status === 'Descargando'
+         }">
+    </div>
+    <span class="mac-address">{{ battery.status }}</span>
   </div>
 
   <div class="card-body">
     
     <div class="soc-display">
       <div class="soc-chart" 
-           [ngStyle]="{ 'background': 'conic-gradient(#38bdf8 0% ' + battery.basic_data.soc + '%, #334155 ' + battery.basic_data.soc + '% 100%)' }">
+           [ngStyle]="{ 'background': 'conic-gradient(#38bdf8 0% ' + battery.soc + '%, #334155 ' + battery.soc + '% 100%)' }">
         <div class="soc-value">
-          {{ battery.basic_data.soc }}<span>%</span>
+          {{ battery.soc }}<span>%</span>
         </div>
       </div>
       <div class="soc-label">
-        <span>{{ battery.basic_data.capacity_remaining_ah | number:'1.1-1' }}Ah</span>
-        <span>Restante</span>
+        <span>{{ battery.soc }} Ah</span>
+        <span>Estimado</span>
       </div>
     </div>
 
     <div class="main-data">
       <div class="data-point">
         <span class="label">Voltaje</span>
-        <span class="value">{{ battery.cell_data.voltage_sum | number:'1.2-2' }} V</span>
+        <span class="value">{{ battery.voltage | number:'1.2-2' }} V</span>
       </div>
       <div class="data-point">
         <span class="label">Corriente</span>
-        <span class="value">{{ battery.basic_data.current | number:'1.2-2' }} A</span>
+        <span class="value">{{ battery.current | number:'1.2-2' }} A</span>
       </div>
       <div class="data-point">
         <span class="label">Potencia</span>
-        <span class="value">{{ battery.power_w | number:'1.2-2' }} W</span>
+        <span class="value">{{ battery.power | number:'1.0-0' }} W</span>
       </div>
     </div>
   </div>
 
   <div class="card-footer">
-    <span class="label">Voltaje de Celdas (V)</span>
+    <span class="label">Celdas (V)</span>
     <div class="cell-voltages">
-      <div *ngFor="let v of battery.cell_data.voltages" class="cell">
+      <div *ngFor="let v of battery.cells" class="cell">
         {{ v | number:'1.3-3' }}
       </div>
     </div>

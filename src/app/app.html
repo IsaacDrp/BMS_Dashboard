@@ -1,43 +1,27 @@
-@if (data) {
+<ng-container *ngIf="dashboard$ | async as dashboard; else loadingTemplate">
+
   <main class="dashboard-container">
     
-    <header class="system-summary">
-      <h1>Dashboard de Baterías</h1>
-      <div class="summary-grid">
-        
-        <div class="summary-card">
-          <span class="label">Estado del Sistema</span>
-          <span class="value status-reposo">{{ data.summary?.system_status }}</span>
-        </div>
+    <app-system-summary
+      [data]="dashboard.data"
+      [lastUpdate]="dashboard.last_update"
+      (toggleInverter)="toggleInverter($event)">
+    </app-system-summary>
 
-        <div class="summary-card">
-          <span class="label">Baterías Conectadas</span>
-          <span class="value">{{ data.summary?.connected_count }}</span>
-        </div>
-
-        <div class="summary-card">
-          <span class="label">Potencia Neta Total</span>
-          <span class="value">{{ (data.batteries[0].power_w + data.batteries[1].power_w) | number:'1.2-2' }} W</span>
-        </div>
-
-        <div class="summary-card">
-          <span class="label">Energía Total</span>
-          <span class="value">{{ data.summary?.total_energy_wh | number:'1.2-2' }} Wh</span>
-        </div>
-
+    <section class="batteries-section">
+      <h2>Bancos de Baterías</h2>
+      <div class="batteries-grid">
+        <app-battery-card 
+          *ngFor="let bat of dashboard.data.batteries" 
+          [battery]="bat">
+        </app-battery-card>
       </div>
-    </header>
-
-    <section class="batteries-grid">
-      <app-battery-card *ngFor="let bat of data.batteries" [battery]="bat"></app-battery-card>
     </section>
 
   </main>
 
-} @else {
-  <div class="loading-screen">
-    <h1>Conectando a <span>http://192.168.1.98</span>...</h1>
-    </div>
-}
+</ng-container>
 
-<router-outlet></router-outlet>
+<ng-template #loadingTemplate>
+  <app-loading-screen></app-loading-screen>
+</ng-template>

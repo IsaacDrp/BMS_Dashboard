@@ -1,10 +1,12 @@
-/* Estilos globales y de fondo */
+/* app.component.css */
+
+/* --- Global Reset & Theme (Host context) --- */
 :host {
   display: block;
   min-height: 100vh;
-  background-color: #0f172a; /* Fondo azul oscuro/casi negro */
-  color: #e2e8f0; /* Texto claro (slate-200) */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #0f172a; /* Slate 900 */
+  color: #e2e8f0; /* Slate 200 */
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .dashboard-container {
@@ -13,69 +15,20 @@
   padding: 2rem;
 }
 
-/* --- Estilos del Resumen --- */
-.system-summary h1 {
-  font-size: 2.5rem;
-  font-weight: 300;
-  color: white;
+/* --- Section Headers (Bancos de Baterías) --- */
+h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #94a3b8;
   margin-bottom: 1.5rem;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 0.5rem;
 }
 
-.summary-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.summary-card {
-  background-color: #1e293b; /* Fondo (slate-800) */
-  padding: 1.5rem;
-  border-radius: 0.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  border: 1px solid #334155;
-}
-
-.summary-card .label {
-  font-size: 0.9rem;
-  color: #94a3b8; /* Texto (slate-400) */
-}
-
-.summary-card .value {
-  font-size: 1.75rem;
-  font-weight: 600;
-  color: white;
-}
-
-.summary-card .status-reposo {
-  color: #38bdf8; /* Color (sky-500) */
-}
-
-/* --- Grid de Baterías --- */
+/* --- Batteries Grid --- */
+/* Esto se queda aquí porque el <div class="batteries-grid"> está en app.component.html */
 .batteries-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-  gap: 1.5rem;
-}
-/* --- Estilos de la Pantalla de Carga --- */
-.loading-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  text-align: center;
-}
-
-.loading-screen h1 {
-  font-weight: 300;
-  font-size: 2rem;
-  color: #94a3b8; /* slate-400 */
-}
-
-.loading-screen h1 span {
-  font-family: 'Fira Code', 'Courier New', Courier, monospace;
-  color: #e2e8f0; /* slate-200 */
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
 }

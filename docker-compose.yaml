@@ -3,27 +3,15 @@ version: '3.8'
 services:
   # Nombre de nuestro servicio
   monitor-dashboard:
-    
-    # 1. Construye la imagen usando el Dockerfile en este directorio
     build: .
     
     # 2. Nombre del contenedor (opcional, pero útil)
     container_name: monitor-dashboard-prod
     
-    # 3. Mapeo de puertos
-    # Mapea el puerto 8080 de tu máquina (host) 
-    # al puerto 80 del contenedor (Nginx)
+    # 3. Mapeo de puertos 8081:80
     ports:
       - "8081:80"
-      
-    # 4. Política de reinicio
-    # Reinicia el contenedor si se cae, a menos que lo pares tú
     restart: unless-stopped
-    
-    # Opcional: Si tu API (192.168.1.98) está en otra red
-    # o no es alcanzable desde el contenedor, podrías necesitar:
-    # network_mode: "host" 
-    # Pero pruébalo primero sin esto.
 
 networks:
   default:

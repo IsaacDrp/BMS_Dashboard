@@ -1,0 +1,203 @@
+/* components/system-summary/system-summary.component.css */
+
+:host {
+  display: block;
+  margin-bottom: 3rem; /* Espacio debajo del header */
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 1.5rem 0;
+}
+
+/* --- Summary Grid --- */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.summary-card {
+  background-color: #1e293b; /* Slate 800 */
+  border: 1px solid #334155; /* Slate 700 */
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.summary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+.summary-card .label {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.summary-card .value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.summary-card .value.text-sm {
+  font-size: 1.5rem;
+  font-family: monospace;
+}
+
+.summary-card .value small {
+  font-size: 1rem;
+  color: #64748b;
+}
+
+/* --- Estilos específicos --- */
+
+/* Potencia (Highlight) */
+.summary-card.highlight .value {
+  color: #38bdf8; /* Sky 400 */
+}
+
+/* Inversor Interactivo */
+.summary-card.interactive {
+  cursor: pointer;
+  border-color: #ef4444; /* Rojo por defecto (Off) */
+  background: linear-gradient(to bottom right, #1e293b, #281515);
+}
+
+.summary-card.interactive.active {
+  border-color: #22c55e; /* Verde (On) */
+  background: linear-gradient(to bottom right, #1e293b, #0f291e);
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.led {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #ef4444;
+  box-shadow: 0 0 10px #ef4444;
+}
+
+.led.on {
+  background-color: #22c55e;
+  box-shadow: 0 0 10px #22c55e;
+}
+
+.sub-label {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 5px;
+}
+
+/* ... Tus estilos anteriores de las tarjetas ... */
+
+/* --- Modal Overlay (Fondo oscuro) --- */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7); /* Oscuridad */
+  backdrop-filter: blur(5px); /* Efecto cristal desenfocado */
+  z-index: 1000; /* Asegura que esté encima de todo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* --- Modal Content (La cajita) --- */
+.modal-content {
+  background-color: #1e293b; /* Slate 800 */
+  border: 1px solid #334155;
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  animation: slideUp 0.2s ease-out;
+}
+
+.modal-content h3 {
+  color: #f8fafc;
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+.modal-content p {
+  color: #94a3b8;
+  margin-bottom: 2rem;
+}
+
+/* --- Helpers de texto --- */
+.text-danger { color: #ef4444; }
+.text-success { color: #22c55e; }
+
+/* --- Botones --- */
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancel {
+  background-color: transparent;
+  border: 1px solid #475569;
+  color: #cbd5e1;
+}
+
+.btn-cancel:hover {
+  background-color: #334155;
+}
+
+.btn-confirm {
+  color: white;
+}
+
+.btn-confirm.danger {
+  background-color: #ef4444; /* Rojo para apagar */
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+}
+.btn-confirm.danger:hover { background-color: #dc2626; }
+
+.btn-confirm.success {
+  background-color: #22c55e; /* Verde para encender */
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+}
+.btn-confirm.success:hover { background-color: #16a34a; }
+
+/* --- Animaciones --- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

@@ -1,0 +1,56 @@
+<header class="system-summary">
+    <h1>Panel de Control Solar</h1>
+
+    <div class="summary-grid">
+        <div class="summary-card highlight">
+            <span class="label">Potencia Total</span>
+            <span class="value power-value">
+                {{ data?.summary?.total_power | number:'1.0-0' }} <small>W</small>
+            </span>
+        </div>
+
+        <div class="summary-grid">
+            <div class="summary-card interactive" (click)="onRequestToggle()" [class.active]="data?.inverter?.on">
+                <span class="label">Inversor</span>
+                <div class="status-indicator">
+                    <span class="value">{{ data?.inverter?.on ? 'ENCENDIDO' : 'APAGADO' }}</span>
+                    <div class="led" [class.on]="data?.inverter?.on"></div>
+                </div>
+                <span class="sub-label">Click para cambiar</span>
+            </div>
+
+        </div>
+
+        <div class="modal-backdrop" *ngIf="showConfirmModal">
+            <div class="modal-content">
+                <h3>¿Estás seguro?</h3>
+
+                <p>
+                    Vas a <strong [class.text-danger]="data.inverter.on" [class.text-success]="!data.inverter.on">
+                        {{ data.inverter.on ? 'APAGAR' : 'ENCENDER' }}
+                    </strong> el inversor principal.
+                </p>
+
+                <div class="modal-actions">
+                    <button class="btn-cancel" (click)="onCancelToggle()">Cancelar</button>
+
+                    <button class="btn-confirm" [class.danger]="data.inverter.on" [class.success]="!data.inverter.on"
+                        (click)="onConfirmToggle()">
+                        Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <span class="label">Baterías</span>
+            <span class="value">{{ data?.batteries?.length }}</span>
+        </div>
+
+        <div class="summary-card">
+            <span class="label">Última lectura</span>
+            <span class="value text-sm">{{ lastUpdate | date:'HH:mm:ss' }}</span>
+        </div>
+    </div>
+
+</header>
