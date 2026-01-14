@@ -11,7 +11,7 @@ export class SolarService {
   private apiUrl = '/api'; 
 
   dashboard$: Observable<ApiResponse> = timer(0, 2000).pipe(
-    switchMap(() => this.http.get<ApiResponse>(`${this.apiUrl}/dashboard`)),
+    switchMap(() => this.http.get<ApiResponse>(`${this.apiUrl}/api/dashboard`)),
     retry(3),
     shareReplay(1) 
   );
